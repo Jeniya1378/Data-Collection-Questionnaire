@@ -1,82 +1,98 @@
 # Fatigue & Stress Questionnaire Web App
 
-This is a lightweight, browser-based data collection tool designed for
-research studies.\
-It runs on **any device** (laptop, iPad, mobile) using a modern web
-browser and **requires no installation** or backend server.
+A lightweight, browser-based data-collection tool designed for research studies involving **fatigue**, **stress**, and **perceived exertion**.
 
-The webpage collects the following subjective measures:
+The app runs on **any device** (laptop, phone, tablet) using a modern web browser.  
+There is **no installation**, **no backend server**, and **no external dependency**.
 
--   **Borg CR10** -- Perceived exertion\
--   **STAI-6** -- State anxiety short form *(item texts must be filled
-    in by the researcher)*\
--   **VAS (0--100)** -- Visual analog scale (stress, fatigue, or
-    customizable label)
+👉 **Live Web App:**  
+https://jeniya1378.github.io/Data-Collection-Questionnaire/
 
-All responses are stored **locally** in the browser and exported as a
-**downloadable CSV file** after submission.
+---
+
+## 📋 Included Measures
+
+The questionnaire currently collects:
+
+- **Borg CR10** — Perceived exertion  
+- **PSS / STAI-6 (Short Form State Anxiety)**  
+  *(Item texts must be inserted by the researcher if copyrighted)*  
+- **VAS (0–100)** — Visual analog scale for fatigue, stress, or any customized label
+
+All responses are stored **locally inside the browser** and exported as a **downloadable CSV file** upon submission.
+
+---
 
 ## 📁 Files
 
--   **index.html** -- Main questionnaire interface
+- **index.html** — Main questionnaire interface (HTML + CSS + JavaScript)
+
+---
 
 ## 🚀 How to Use
 
-1.  Open **index.html** in any browser:
+1. Open **index.html** locally  
+   *(or access the hosted version at the link above)*  
+2. Enter participant details  
+3. Complete the subjective scales  
+4. Click **Submit Response**  
+5. View the generated:
+   - JSON output  
+   - CSV-formatted output  
+   - **Download CSV** button  
+6. Save the CSV file (example: `survey_response.csv`) to include in your dataset.
 
-    -   Chrome
-    -   Safari
-    -   Firefox
-    -   Mobile/iPad browsers
+---
 
-2.  Fill out the participant details and scales.
+## 🔧 Customization Guide
 
-3.  Click **Submit Response**.
+### 1. Modify STAI-6 / PSS Items
+Replace placeholder text in the HTML section with the **official item wording** from your licensed source.
 
-4.  A summary will appear showing:
+### 2. Change the VAS Label
+Locate the VAS section in the HTML and adjust the displayed text (e.g., "Stress Level", "Mental Fatigue", "Effort", etc.).
 
-    -   JSON output
-    -   CSV-formatted output
-    -   A **Download CSV** button
+### 3. Add More Scales or Items
+Duplicate existing HTML blocks to create new measurement sections or additional timepoints.
 
-5.  Save the file (e.g., `survey_response.csv`) for your dataset.
+### 4. Adjust Export Structure
+Modify the JavaScript object that compiles responses into JSON/CSV if you want:
+- multiple trials per participant  
+- repeated measures  
+- automatic timestamping  
+- session identifiers  
 
-## 🔧 Customization
+---
 
-### 1. Replace STAI-6 placeholder text
+## 🌐 Hosting Instructions (Already Set Up)
 
-Replace with the official item wordings from your licensed source.
+Your site is hosted via GitHub Pages.
 
-### 2. Change VAS label
+To re-deploy or update:
 
-Modify the default VAS label in the HTML form.
+1. Push changes to your GitHub repository  
+2. Visit **Settings → Pages**  
+3. Ensure configuration is:
+   - Branch: `main`  
+   - Folder: `/` (root)
 
-### 3. Add more scales
+GitHub will auto-publish updates at:
 
-Duplicate any section to add additional items or multiple timepoints.
+**https://jeniya1378.github.io/Data-Collection-Questionnaire/**
 
-## 🌐 Hosting on GitHub Pages
+---
 
-1.  Push the repository to GitHub.
-2.  Go to **Settings → Pages**
-3.  Select:
-    -   Branch: `main`
-    -   Folder: `/` (root)
+## 📦 Technical Details
 
-GitHub will generate a public link like:
+- 100% **HTML + CSS + JavaScript**
+- No frameworks required  
+- No backend or databases  
+- Works offline (if the file is opened locally)  
+- Fully portable and easy to customize  
 
-    https://your-username.github.io/your-repo/
-
-Open the link in any browser to use the questionnaire.
-
-## 📦 No Dependencies Required
-
--   Pure **HTML + CSS + JavaScript**
--   No frameworks
--   No backend
--   Works offline if opened locally
+---
 
 ## 📝 License
 
-This tool is free to use for research and educational purposes.\
-Ensure proper licensing for copyrighted questionnaires (e.g., STAI-6).
+This tool is freely available for **research and educational** use.  
+Please ensure you hold the appropriate rights for proprietary questionnaires (e.g., STAI-6 official wording).
