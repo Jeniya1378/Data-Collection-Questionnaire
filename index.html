@@ -102,7 +102,6 @@
         <strong>0 (no exertion)</strong> to <strong>10 (maximum exertion)</strong>.
       </p>
       <div class="scale-options">
-        <!-- 0–10 radio buttons -->
         <label><input type="radio" name="borg_cr10" value="0" required />0</label>
         <label><input type="radio" name="borg_cr10" value="0.5" />0.5</label>
         <label><input type="radio" name="borg_cr10" value="1" />1</label>
@@ -122,177 +121,27 @@
       </label>
     </fieldset>
 
-    <!-- STAI-6 -->
+    <!-- NRS-11 Stress -->
     <fieldset>
-      <legend>STAI-6 – State Anxiety (Short Form)</legend>
+      <legend>NRS-11 – Current Stress Level</legend>
       <p>
-        Below are a few statements about how you might feel <strong>right now</strong>.
-        Please indicate how much each statement applies to you at this moment.
+        Please rate your current level of stress on a scale from
+        <strong>0 (no stress at all)</strong> to <strong>10 (extremely stressed)</strong>.
       </p>
-      <p><em>
-        Note: Replace the placeholder item texts below with the official STAI-6 item wordings
-        from your licensed source.
-      </em></p>
-
-      <!-- Item 1 -->
-      <div class="item-row">
-        <label for="stai1"><strong>1.</strong> [STAI-6 item 1 – replace with official wording]</label>
-        <div class="scale-options">
-          <label><input type="radio" name="stai1" value="1" required />1 (Not at all)</label>
-          <label><input type="radio" name="stai1" value="2" />2 (Somewhat)</label>
-          <label><input type="radio" name="stai1" value="3" />3 (Moderately)</label>
-          <label><input type="radio" name="stai1" value="4" />4 (Very much)</label>
-        </div>
-      </div>
-
-      <!-- Item 2 -->
-      <div class="item-row">
-        <label for="stai2"><strong>2.</strong> [STAI-6 item 2 – replace with official wording]</label>
-        <div class="scale-options">
-          <label><input type="radio" name="stai2" value="1" required />1</label>
-          <label><input type="radio" name="stai2" value="2" />2</label>
-          <label><input type="radio" name="stai2" value="3" />3</label>
-          <label><input type="radio" name="stai2" value="4" />4</label>
-        </div>
-      </div>
-
-      <!-- Item 3 -->
-      <div class="item-row">
-        <label for="stai3"><strong>3.</strong> [STAI-6 item 3 – replace with official wording]</label>
-        <div class="scale-options">
-          <label><input type="radio" name="stai3" value="1" required />1</label>
-          <label><input type="radio" name="stai3" value="2" />2</label>
-          <label><input type="radio" name="stai3" value="3" />3</label>
-          <label><input type="radio" name="stai3" value="4" />4</label>
-        </div>
-      </div>
-
-      <!-- Item 4 -->
-      <div class="item-row">
-        <label for="stai4"><strong>4.</strong> [STAI-6 item 4 – replace with official wording]</label>
-        <div class="scale-options">
-          <label><input type="radio" name="stai4" value="1" required />1</label>
-          <label><input type="radio" name="stai4" value="2" />2</label>
-          <label><input type="radio" name="stai4" value="3" />3</label>
-          <label><input type="radio" name="stai4" value="4" />4</label>
-        </div>
-      </div>
-
-      <!-- Item 5 -->
-      <div class="item-row">
-        <label for="stai5"><strong>5.</strong> [STAI-6 item 5 – replace with official wording]</label>
-        <div class="scale-options">
-          <label><input type="radio" name="stai5" value="1" required />1</label>
-          <label><input type="radio" name="stai5" value="2" />2</label>
-          <label><input type="radio" name="stai5" value="3" />3</label>
-          <label><input type="radio" name="stai5" value="4" />4</label>
-        </div>
-      </div>
-
-      <!-- Item 6 -->
-      <div class="item-row">
-        <label for="stai6"><strong>6.</strong> [STAI-6 item 6 – replace with official wording]</label>
-        <div class="scale-options">
-          <label><input type="radio" name="stai6" value="1" required />1</label>
-          <label><input type="radio" name="stai6" value="2" />2</label>
-          <label><input type="radio" name="stai6" value="3" />3</label>
-          <label><input type="radio" name="stai6" value="4" />4</label>
-        </div>
+      <div class="scale-options">
+        <label><input type="radio" name="nrs_stress" value="0" required />0</label>
+        <label><input type="radio" name="nrs_stress" value="1" />1</label>
+        <label><input type="radio" name="nrs_stress" value="2" />2</label>
+        <label><input type="radio" name="nrs_stress" value="3" />3</label>
+        <label><input type="radio" name="nrs_stress" value="4" />4</label>
+        <label><input type="radio" name="nrs_stress" value="5" />5</label>
+        <label><input type="radio" name="nrs_stress" value="6" />6</label>
+        <label><input type="radio" name="nrs_stress" value="7" />7</label>
+        <label><input type="radio" name="nrs_stress" value="8" />8</label>
+        <label><input type="radio" name="nrs_stress" value="9" />9</label>
+        <label><input type="radio" name="nrs_stress" value="10" />10</label>
       </div>
     </fieldset>
-
-    <!-- VAS -->
-    <fieldset>
-      <legend>Visual Analog Scale (VAS)</legend>
-      <p>
-        Please rate your current level on the line below, from
-        <strong>0 (none)</strong> to <strong>100 (extreme)</strong>.
-        You can adapt the label (e.g., “stress”, “fatigue”, “pain”) to your study.
-      </p>
-      <label>
-        VAS Label (e.g., "Stress", "Fatigue"):
-        <input type="text" name="vas_label" value="Stress" />
-      </label>
-      <div class="vas-row">
-        <span>0</span>
-        <input
-          type="range"
-          name="vas_value"
-          id="vasSlider"
-          min="0"
-          max="100"
-          value="50"
-        />
-        <span>100</span>
-        <span id="vasValue">50</span>
-      </div>
-    </fieldset>
-
-    <button type="submit">Submit Response</button>
   </form>
-
-  <div id="resultContainer" style="display:none;"></div>
-
-  <script>
-    // Update VAS value display
-    const vasSlider = document.getElementById('vasSlider');
-    const vasValueDisplay = document.getElementById('vasValue');
-    vasSlider.addEventListener('input', () => {
-      vasValueDisplay.textContent = vasSlider.value;
-    });
-
-    function formToObject(form) {
-      const data = {};
-      const formData = new FormData(form);
-      for (const [key, value] of formData.entries()) {
-        data[key] = value;
-      }
-      return data;
-    }
-
-    function objectToCSV(obj) {
-      const headers = Object.keys(obj);
-      const values = headers.map(h => String(obj[h]).replace(/"/g, '""'));
-      return headers.join(",") + "\n" + values.map(v => `"${v}"`).join(",");
-    }
-
-    document.getElementById('surveyForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const data = formToObject(this);
-
-      // Add a timestamp
-      data.timestamp_iso = new Date().toISOString();
-
-      const jsonStr = JSON.stringify(data, null, 2);
-      const csvStr = objectToCSV(data);
-
-      // Show JSON result
-      const resultDiv = document.getElementById('resultContainer');
-      resultDiv.style.display = 'block';
-      resultDiv.textContent =
-        "JSON data (you can copy this):\n\n" +
-        jsonStr +
-        "\n\nCSV preview:\n\n" +
-        csvStr;
-
-      // Create downloadable CSV file
-      const blob = new Blob([csvStr], { type: "text/csv" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "survey_response.csv";
-      link.textContent = "Download CSV file";
-      link.style.display = "inline-block";
-      link.style.marginTop = "10px";
-
-      // Remove old link if present
-      const oldLink = document.getElementById("downloadLink");
-      if (oldLink) oldLink.remove();
-      link.id = "downloadLink";
-      resultDiv.appendChild(document.createElement("br"));
-      resultDiv.appendChild(link);
-    });
-  </script>
 </body>
 </html>
