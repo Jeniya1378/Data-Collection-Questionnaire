@@ -142,6 +142,33 @@
         <label><input type="radio" name="nrs_stress" value="10" />10</label>
       </div>
     </fieldset>
+
+    <!-- VAS -->
+    <fieldset>
+      <legend>Visual Analog Scale (VAS)</legend>
+      <p>
+        Please rate your current level on the line below, from
+        <strong>0 (none)</strong> to <strong>100 (extreme)</strong>.
+        You can adapt the label (e.g., “stress”, “fatigue”, “pain”) to your study.
+      </p>
+      <label>
+        VAS Label (e.g., "Stress", "Fatigue"):
+        <input type="text" name="vas_label" value="Stress" />
+      </label>
+      <div class="vas-row">
+        <span>0</span>
+        <input
+          type="range"
+          name="vas_value"
+          id="vasSlider"
+          min="0"
+          max="100"
+          value="50"
+        />
+        <span>100</span>
+        <span id="vasValue">50</span>
+      </div>
+    </fieldset>
   </form>
 </body>
 </html>
