@@ -46,8 +46,8 @@ All responses are stored **locally inside the browser** and exported as a **down
 
 ## 🔧 Customization Guide
 
-### 1. Modify STAI-6 / PSS Items
-Replace placeholder text in the HTML section with the **official item wording** from your licensed source.
+### 1. Modify PSS Items
+Replace text in the HTML section.
 
 ### 2. Change the VAS Label
 Locate the VAS section in the HTML and adjust the displayed text (e.g., "Stress Level", "Mental Fatigue", "Effort", etc.).
@@ -66,7 +66,7 @@ Modify the JavaScript object that compiles responses into JSON/CSV if you want:
 
 ## 🌐 Hosting Instructions (Already Set Up)
 
-Your site is hosted via GitHub Pages.
+This site is hosted via GitHub Pages.
 
 To re-deploy or update:
 
