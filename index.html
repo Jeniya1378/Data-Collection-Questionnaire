@@ -143,18 +143,13 @@
       </div>
     </fieldset>
 
-    <!-- VAS -->
+    <!-- VAS for Mental Fatigue -->
     <fieldset>
-      <legend>Visual Analog Scale (VAS)</legend>
+      <legend>Visual Analog Scale (VAS) – Mental Fatigue</legend>
       <p>
-        Please rate your current level on the line below, from
-        <strong>0 (none)</strong> to <strong>100 (extreme)</strong>.
-        You can adapt the label (e.g., “stress”, “fatigue”, “pain”) to your study.
+        Please rate your current level of <strong>mental fatigue</strong> on the line below, from
+        <strong>0 (no fatigue)</strong> to <strong>100 (extreme fatigue)</strong>.
       </p>
-      <label>
-        VAS Label (e.g., "Stress", "Fatigue"):
-        <input type="text" name="vas_label" value="Stress" />
-      </label>
       <div class="vas-row">
         <span>0</span>
         <input
@@ -169,6 +164,66 @@
         <span id="vasValue">50</span>
       </div>
     </fieldset>
+
+    <button type="submit">Submit Response</button>
   </form>
+
+  <div id="resultContainer" style="display:none;"></div>
+
+  <script>
+    const vasSlider = document.getElementById('vasSlider');
+    const vasValueDisplay = document.getElementById('vasValue');
+    vasSlider.addEventListener('input', () => {
+      vasValueDisplay.textContent = vasSlider.value;
+    });
+
+    function formToObject(form) {
+      const data = {};
+      const formData = new FormData(form);
+      for (const [key, value] of formData.entries()) {
+        data[key] = value;
+      }
+      return data;
+    }
+
+    function objectToCSV(obj) {
+      const headers = Object.keys(obj);
+      const values = headers.map(h => String(obj[h]).replace(/"/g, '""'));
+      return headers.join(",") + "\n" + values.map(v => `"${v}"`).join(",");
+    }
+
+    document.getElementById('surveyForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const data = formToObject(this);
+      data.timestamp_iso = new Date().toISOString();
+
+      const jsonStr = JSON.stringify(data, null, 2);
+      const csvStr = objectToCSV(data);
+
+      const resultDiv = document.getElementById('resultContainer');
+      resultDiv.style.display = 'block';
+      resultDiv.textContent =
+        "JSON data (you can copy this):\n\n" +
+        jsonStr +
+        "\n\nCSV preview:\n\n" +
+        csvStr;
+
+      const blob = new Blob([csvStr], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "survey_response.csv";
+      link.textContent = "Download CSV file";
+      link.style.display = "inline-block";
+      link.style.marginTop = "10px";
+
+      const oldLink = document.getElementById("downloadLink");
+      if (oldLink) oldLink.remove();
+      link.id = "downloadLink";
+      resultDiv.appendChild(document.createElement("br"));
+      resultDiv.appendChild(link);
+    });
+  </script>
 </body>
 </html>
