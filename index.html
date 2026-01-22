@@ -12,22 +12,15 @@
       padding: 16px;
       line-height: 1.5;
     }
-    h1, h2, h3 {
-      margin-top: 1.2em;
-    }
+    h1, h2, h3 { margin-top: 1.2em; }
     fieldset {
       border: 1px solid #ccc;
       border-radius: 8px;
       padding: 12px 16px;
       margin-bottom: 16px;
     }
-    legend {
-      font-weight: 600;
-    }
-    label {
-      display: block;
-      margin-bottom: 6px;
-    }
+    legend { font-weight: 600; }
+    label { display: block; margin-bottom: 6px; }
     .scale-options {
       display: flex;
       flex-wrap: wrap;
@@ -41,19 +34,17 @@
       gap: 4px;
       margin: 0;
     }
-    .item-row {
-      margin-bottom: 12px;
-    }
     button {
       padding: 10px 18px;
       border-radius: 6px;
       border: 1px solid #ccc;
       cursor: pointer;
       font-size: 1rem;
+      margin-right: 8px;
+      margin-top: 6px;
     }
-    button:hover {
-      opacity: 0.9;
-    }
+    button:hover { opacity: 0.9; }
+
     #resultContainer {
       margin-top: 20px;
       padding: 12px;
@@ -69,16 +60,18 @@
       align-items: center;
       gap: 10px;
     }
-    input[type="range"] {
-      width: 100%;
+    input[type="range"] { width: 100%; }
+
+    .small-note {
+      font-size: 0.9rem;
+      color: #444;
+      margin-top: 6px;
     }
   </style>
 </head>
 <body>
   <h1>Fatigue & Stress Questionnaire</h1>
-  <p>
-    Please complete the following scales. Your responses will be used for research purposes only.
-  </p>
+  <p>Please complete the following scales. Your responses will be used for research purposes only.</p>
 
   <form id="surveyForm">
     <!-- Participant info -->
@@ -88,6 +81,12 @@
         Participant ID:
         <input type="text" name="participant_id" required />
       </label>
+
+      <label>
+        Trial Number:
+        <input type="number" name="trial_number" min="1" step="1" required />
+      </label>
+
       <label>
         Session ID / Condition (optional):
         <input type="text" name="session_id" />
@@ -115,10 +114,7 @@
         <label><input type="radio" name="borg_cr10" value="9" />9</label>
         <label><input type="radio" name="borg_cr10" value="10" />10</label>
       </div>
-      <label>
-        Optional comment:
-        <input type="text" name="borg_comment" />
-      </label>
+      <!-- (Removed optional comment field) -->
     </fieldset>
 
     <!-- NRS-11 Stress -->
@@ -165,7 +161,13 @@
       </div>
     </fieldset>
 
-    <button type="submit">Submit Response</button>
+    <button type="submit">Add Response</button>
+    <button type="button" id="downloadAllBtn">Download ALL Responses (CSV)</button>
+    <button type="button" id="clearAllBtn">Clear All</button>
+
+    <div class="small-note">
+      Tip: Each time you click <strong>Add Response</strong>, it appends a new row to your session list.
+    </div>
   </form>
 
   <div id="resultContainer" style="display:none;"></div>
@@ -173,6 +175,11 @@
   <script>
     const vasSlider = document.getElementById('vasSlider');
     const vasValueDisplay = document.getElementById('vasValue');
+    const resultDiv = document.getElementById('resultContainer');
+
+    // Store all responses in-memory for this page session
+    const allResponses = [];
+
     vasSlider.addEventListener('input', () => {
       vasValueDisplay.textContent = vasSlider.value;
     });
@@ -186,10 +193,31 @@
       return data;
     }
 
-    function objectToCSV(obj) {
-      const headers = Object.keys(obj);
-      const values = headers.map(h => String(obj[h]).replace(/"/g, '""'));
-      return headers.join(",") + "\n" + values.map(v => `"${v}"`).join(",");
+    function escapeCSV(value) {
+      const s = String(value ?? "");
+      // Wrap in quotes and escape internal quotes
+      return `"${s.replace(/"/g, '""')}"`;
+    }
+
+    function objectsToCSV(rows) {
+      if (!rows.length) return "";
+
+      // Use union of keys (so if you add fields later, CSV still works)
+      const headersSet = new Set();
+      rows.forEach(r => Object.keys(r).forEach(k => headersSet.add(k)));
+      const headers = Array.from(headersSet);
+
+      const headerLine = headers.join(",");
+      const lines = rows.map(r => headers.map(h => escapeCSV(r[h])).join(","));
+      return headerLine + "\n" + lines.join("\n");
+    }
+
+    function renderSummary() {
+      resultDiv.style.display = 'block';
+      resultDiv.textContent =
+        `Saved responses in this session: ${allResponses.length}\n\n` +
+        `Last response (JSON):\n` +
+        JSON.stringify(allResponses[allResponses.length - 1], null, 2);
     }
 
     document.getElementById('surveyForm').addEventListener('submit', function (e) {
@@ -198,31 +226,46 @@
       const data = formToObject(this);
       data.timestamp_iso = new Date().toISOString();
 
-      const jsonStr = JSON.stringify(data, null, 2);
-      const csvStr = objectToCSV(data);
+      allResponses.push(data);
+      renderSummary();
 
-      const resultDiv = document.getElementById('resultContainer');
-      resultDiv.style.display = 'block';
-      resultDiv.textContent =
-        "JSON data (you can copy this):\n\n" +
-        jsonStr +
-        "\n\nCSV preview:\n\n" +
-        csvStr;
+      // Optional: reset form between trials, but keep participant/session if you want:
+      // Comment these 2 lines out if you want the form to stay as-is.
+      const participantId = this.participant_id.value;
+      const sessionId = this.session_id.value;
+      this.reset();
+      this.participant_id.value = participantId;
+      this.session_id.value = sessionId;
 
+      // Restore slider default display
+      vasSlider.value = 50;
+      vasValueDisplay.textContent = "50";
+    });
+
+    document.getElementById('downloadAllBtn').addEventListener('click', () => {
+      if (!allResponses.length) {
+        alert("No responses yet. Please add at least one response first.");
+        return;
+      }
+
+      const csvStr = objectsToCSV(allResponses);
       const blob = new Blob([csvStr], { type: "text/csv" });
       const url = URL.createObjectURL(blob);
+
       const link = document.createElement("a");
       link.href = url;
-      link.download = "survey_response.csv";
-      link.textContent = "Download CSV file";
-      link.style.display = "inline-block";
-      link.style.marginTop = "10px";
+      link.download = "survey_responses_all.csv";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
 
-      const oldLink = document.getElementById("downloadLink");
-      if (oldLink) oldLink.remove();
-      link.id = "downloadLink";
-      resultDiv.appendChild(document.createElement("br"));
-      resultDiv.appendChild(link);
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('clearAllBtn').addEventListener('click', () => {
+      allResponses.length = 0;
+      resultDiv.style.display = 'block';
+      resultDiv.textContent = "All saved responses cleared.";
     });
   </script>
 </body>
